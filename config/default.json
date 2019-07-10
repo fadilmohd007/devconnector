@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://fadil:fadil123@cluster0-jwaf1.mongodb.net/test?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://fadil:fadil123@cluster0-jwaf1.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "jwtSecretText"
 }
