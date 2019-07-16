@@ -192,10 +192,10 @@ router.post(
 //@route DELETE api/posts/comment/:id/:comment_id
 //@desc deelte a comment on a post by id
 //@access private
-router.delete('/comment/:id/comment_id', auth, async (req, res) => {
+router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    //pull ot the comment ffrom the post
+    //pull out the comment from the post
     const comment = post.comments.find(
       comment => comment.id === req.params.comment_id
     );
@@ -204,14 +204,17 @@ router.delete('/comment/:id/comment_id', auth, async (req, res) => {
       return res.status(404).json({ msg: 'comment does not exist' });
     }
     //check user
-    if (comment.user.toString() !== req.user.id) {
+    if (
+      comment.user.toString() !== req.user.id &&
+      req.user.id !== post.user.toString()
+    ) {
       return res.status(401).json({ msg: 'user not authorised' });
     }
     // ||post.user.toString !== req.user.id
     //GET remove indeex
     const removeIndex = post.comments
-      .map(comment => comment.user.toString())
-      .indexOf(req.user.id);
+      .map(comment => comment._id)
+      .indexOf(req.params.comment_id);
     post.comments.splice(removeIndex, 1);
     await post.save();
     return res.json(post.comments);
