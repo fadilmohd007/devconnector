@@ -4,3 +4,42 @@ $light-color: #f4f4f4;
 $danger-color: #dc3545;
 $success-color: #28a745;
 $max-width: 1100px;
+
+//set text color bvased on background
+@function set-text-color($color) {
+  @if (lightness($color) >60) {
+    @return #333;
+  } @else {
+    @return #fff;
+  }
+}
+
+@mixin set-background($color) {
+  background-color: $color;
+  color: set-text-color($color);
+}
+
+//Margin and padding
+$spaceamount: (1, 2, 3, 4, 5);
+
+@each $space in $spaceamount {
+  //all around margin
+  .m-#{$space} {
+    margin: #{$space}rem;
+  }
+
+  //vetrtical margin
+  .my-#{$space} {
+    margin: #{$space}rem;
+  }
+
+  //all around padding
+  .p-#{$space} {
+    padding: #{$space}rem;
+  }
+
+  //vetrtical padding
+  .py-#{$space} {
+    padding: #{$space}rem;
+  }
+}
